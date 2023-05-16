@@ -19,13 +19,10 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
+ 
 } from 'react-native/Libraries/NewAppScreen';
 import ArticleProvider from './src/Context/globalState';
-import HomeScreen from './src/screens/HomeScreen';
+import Navigation from './src/navigation/Navigation';
 
 
 
@@ -37,10 +34,10 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }} >
     
       <ArticleProvider>
-        <HomeScreen/>
+        <Navigation/>
       </ArticleProvider>
      
      
