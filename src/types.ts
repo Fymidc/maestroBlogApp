@@ -53,5 +53,5 @@ export interface Root {
 
   export type StackParamList = {
     Home:undefined
-    Detail:undefined
+    Detail:{item:Result}
   }
