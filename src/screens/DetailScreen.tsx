@@ -13,12 +13,19 @@ const DetailScreen = (props: Props) => {
     html: `
   ${props.route.params?.item?.content}`
   };
-
+  const tagsStyles = {
+    body: {
+      color: props.route.params.isDark ? 'white':"black"
+    },
+    a: {
+      color: 'green'
+    }
+  };
   const { width } = useWindowDimensions();
 
   return (
-    <View style={{ flex: 1 }} >
-      <View style={{ flex: 1, elevation: 8 }} >
+    <View style={{ flex: 1 ,backgroundColor: props.route.params.isDark ? "#141d26" : "white"}} >
+      <View style={{ flex: 1, elevation: 8 ,borderRadius:5,overflow:"hidden", padding:5}} >
 
         <Image style={{ flex: 1 }} source={{ uri: `${props.route.params?.item?.banner}` }} />
         <Text style={{
@@ -30,11 +37,12 @@ const DetailScreen = (props: Props) => {
 
       <View style={{ flex: 2, padding: 10 }} >
         <ScrollView>
-        <Text style={{textAlign:"right"}} >{props.route.params?.item?.createdAt.slice(0,10)}</Text>
+        <Text style={{color:props.route.params.isDark ? "grey" : "grey",textAlign:"right"}} >{props.route.params?.item?.createdAt.slice(0,10)}</Text>
 
           <RenderHtml
             contentWidth={width}
             source={source}
+            tagsStyles={tagsStyles}
           />
         </ScrollView>
       </View>

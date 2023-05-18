@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Anton-Regular.ttf",
+      "sha1": "a3651b13ddfd77fc2a203b847ded929c8dae878a"
+    },
+    {
+      "path": "assets/fonts/Antonio-Bold.ttf",
+      "sha1": "e1b0b49ecbeffd517c9227043b96e552990da22f"
+    },
+    {
+      "path": "assets/fonts/Antonio-SemiBold.ttf",
+      "sha1": "255c6fc5ac21ce402100304e2c245bde438f02fa"
+    },
+    {
+      "path": "assets/fonts/Antonio-VariableFont_wght.ttf",
+      "sha1": "ff057578bd721ca56c77d18d91049843e366852a"
+    }
+  ]
+}

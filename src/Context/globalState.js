@@ -1,43 +1,71 @@
-import React,{useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArticleContext } from './context';
 
-
-const ArticleProvider = ({ children}) => {
-    
-
-    const [isDark, setisDark] = useState(false);
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const happyBirthday = (e) => setName(e);
+ const ArticleProvider = ({ children }) => {
 
 
-    const toggleSwitch = () => setisDark(previousState => !previousState);
+  const [isDark, setisDark] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setpage] = useState(1)
+  const [refreshing, setRefreshing,] = React.useState(false);
 
-    const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setLoading(true)
-      setTimeout(() => {
-       
-        setRefreshing(false);
-      }, 2000);
-    }, []);
+  const toggleSwitch = () => setisDark(previousState => !previousState);
 
-    useEffect(() => {
-      fetch('https://www.lenasoftware.com/api/v1/en/maestro/1')
-      .then((res)=>res.json())
-      .then((json)=> setArticles(json))
-      .catch((error)=>console.log(error))
-      .finally(()=>setLoading(false))
-    }, [refreshing])
-    
 
-    return (
-      <ArticleContext.Provider value={{ isDark,toggleSwitch, refreshing, articles,loading ,onRefresh}}>
-        {children}
-      </ArticleContext.Provider>
-    );
-  };
+  const getMore = () => {
+    setpage(page + 1)
+    console.log(page)
+  }
 
-  export default ArticleProvider
+  const getArticles = () => {
+   
+    fetch(`https://www.lenasoftware.com/api/v1/en/maestro/1?page=${page}&count=10`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (page ===1 ) {
+          setLoading(false)
+          setArticles(json.result)
+
+        } else {
+          setLoading(false)
+          setArticles([...articles,...json.result])
+
+        }
+      }
+      )
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false))
+  }
+
+
+  //refresh control
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setLoading(true)
+    setTimeout(() => {
+
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+
+
+  useEffect(() => {
+
+    getArticles()
+  }, [refreshing, page])
+
+
+
+
+  return (
+    <ArticleContext.Provider value={{ getMore, isDark, toggleSwitch, refreshing, articles, loading, onRefresh }}>
+      {children}
+    </ArticleContext.Provider>
+  );
+};
+
+export default ArticleProvider
